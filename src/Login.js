@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
 
-const API = "https://smart-bin-backend-zygj.onrender.com/api";
-
 function Login() {
   const [email, setEmail] = useState("");
 
@@ -13,22 +11,25 @@ function Login() {
     }
 
     try {
-      const res = await fetch(`${API}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+      const res = await fetch(
+        "https://smart-bin-backend-zygj.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       const data = await res.json();
 
-      if (res.ok) {
+      if (data.email) {
         localStorage.setItem("email", data.email);
-        localStorage.setItem("credits", data.credits || 0);
+        localStorage.setItem("credits", data.credits);
         window.location.href = "/dashboard";
       } else {
-        alert(data.message || "Login failed");
+        alert("Login failed");
       }
     } catch (err) {
       alert("Server error");
@@ -38,7 +39,6 @@ function Login() {
   return (
     <div className="app-bg">
       <div className="glass-card">
-
         <h1 className="title">
           Smart Bin <span>🗑</span>
         </h1>
@@ -54,7 +54,6 @@ function Login() {
         <button className="primary-btn" onClick={handleLogin}>
           Login
         </button>
-
       </div>
     </div>
   );

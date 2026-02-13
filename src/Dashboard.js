@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
-const API = "https://smart-bin-backend-zygj.onrender.com/api";
-
 function Dashboard() {
   const [bins, setBins] = useState([]);
   const email = localStorage.getItem("email");
   const credits = localStorage.getItem("credits") || 0;
 
   useEffect(() => {
-    fetch(`${API}/bins`)
+    fetch("https://smart-bin-backend-zygj.onrender.com/api/bins")
       .then((res) => res.json())
       .then((data) => setBins(data))
       .catch((err) => console.log(err));
@@ -23,14 +21,11 @@ function Dashboard() {
   return (
     <div className="app-bg">
       <div className="glass-card">
-
         <h1 className="title">
           Smart Bin <span>♻️</span>
         </h1>
 
-        <div className="user-box">
-          {email}
-        </div>
+        <div className="user-box">{email}</div>
 
         <div className="stats-row">
           <div className="stat-card">
@@ -64,7 +59,6 @@ function Dashboard() {
         <button className="logout-btn" onClick={handleLogout}>
           Logout
         </button>
-
       </div>
     </div>
   );
