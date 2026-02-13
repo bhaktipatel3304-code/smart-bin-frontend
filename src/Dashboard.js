@@ -7,7 +7,7 @@ function Dashboard() {
   const credits = localStorage.getItem("credits") || 0;
 
   useEffect(() => {
-    fetch("https://smart-bin-backend-zygj.onrender.com/api/bins")
+fetch("https://smart-bin-backend-zygj.onrender.com/api/bins")
       .then((res) => res.json())
       .then((data) => setBins(data))
       .catch((err) => console.log(err));

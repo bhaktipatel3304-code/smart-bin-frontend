@@ -11,16 +11,17 @@ function Login() {
     }
 
     try {
-      const res = await fetch(
-        "https://smart-bin-backend-zygj.onrender.com/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
+const res = await fetch(
+  "https://smart-bin-backend-zygj.onrender.com/api/auth/login",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  }
+);
+
 
       const data = await res.json();
 
