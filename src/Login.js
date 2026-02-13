@@ -11,28 +11,29 @@ function Login() {
     }
 
     try {
-const res = await fetch(
-  "https://smart-bin-backend-zygj.onrender.com/api/auth/login",
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email }),
-  }
-);
-
+      const res = await fetch(
+        "https://smart-bin-backend-zygj.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       const data = await res.json();
 
-      if (data.email) {
+      if (res.ok) {
         localStorage.setItem("email", data.email);
-        localStorage.setItem("credits", data.credits);
+        localStorage.setItem("credits", data.credits || 0);
         window.location.href = "/dashboard";
       } else {
-        alert("Login failed");
+        alert(data.message || "Login failed");
       }
+
     } catch (err) {
+      console.error(err);
       alert("Server error");
     }
   };
