@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
+const API = "https://smart-bin-backend-zygj.onrender.com/api";
+
 function Dashboard() {
   const [bins, setBins] = useState([]);
   const email = localStorage.getItem("email");
   const credits = localStorage.getItem("credits") || 0;
 
   useEffect(() => {
-    fetch("https://smart-bin-backend-zygj.onrender.com/api")
+    fetch(`${API}/bins`)
       .then((res) => res.json())
       .then((data) => setBins(data))
       .catch((err) => console.log(err));
@@ -49,12 +51,12 @@ function Dashboard() {
             <div className="progress-bar">
               <div
                 className="progress-fill"
-                style={{ width: `${bin.level}%` }}
+                style={{ width: `${bin.fillLevel}%` }}
               ></div>
             </div>
 
             <p className="status">
-              {bin.status} • {bin.level}%
+              {bin.status} • {bin.fillLevel}%
             </p>
           </div>
         ))}
