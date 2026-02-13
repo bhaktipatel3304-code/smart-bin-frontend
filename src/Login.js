@@ -11,7 +11,7 @@ function Login() {
     }
 
     try {
-      const res = await fetch("http://192.168.0.190:5000/api/auth/login", {
+      const res = await fetch("https://smart-bin-backend-zygj.onrender.com/api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
