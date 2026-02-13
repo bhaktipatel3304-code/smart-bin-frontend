@@ -3,15 +3,18 @@ import "./App.css";
 
 function Login() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     if (!email) {
-      alert("Please enter email");
+      alert("Enter email");
       return;
     }
 
     try {
-      const res = await fetch(
+      setLoading(true);
+
+      const response = await fetch(
         "https://smart-bin-backend-zygj.onrender.com/api/auth/login",
         {
           method: "POST",
@@ -22,19 +25,21 @@ function Login() {
         }
       );
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (res.ok) {
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("credits", data.credits || 0);
-        window.location.href = "/dashboard";
-      } else {
-        alert(data.message || "Login failed");
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
       }
 
-    } catch (err) {
-      console.error(err);
-      alert("Server error");
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("credits", data.credits);
+
+      window.location.href = "/dashboard";
+    } catch (error) {
+      console.error(error);
+      alert("Backend waking up. Try again in 10 seconds.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,7 +59,7 @@ function Login() {
         />
 
         <button className="primary-btn" onClick={handleLogin}>
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </div>
     </div>
